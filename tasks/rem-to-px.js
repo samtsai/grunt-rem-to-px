@@ -51,6 +51,12 @@ module.exports = function(grunt) {
 					}
 
 					return "background-image: url('" + options.path_prefix + file + "');";
+				})
+
+				// Replace opacity: x; with filter: alpha(opacity=100*x);
+				.replace(/opacity\s*\:\s*(\d*\.?\d+)\s*\;/g, function($0, $1) {
+					var n = parseFloat($1);
+					return "filter: alpha(opacity=" + Math.round(n * 100) + ");";
 				});
 			}).join('\n');
 
