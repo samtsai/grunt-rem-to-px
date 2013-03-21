@@ -20,6 +20,10 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     "rem-to-px": {
       default_options: {
+        options: {
+          path_images: 'test/'
+        },
+
         files: {
           'tmp/test_output.css': ['test/test.css']
         }

@@ -12,6 +12,12 @@ module.exports = function(grunt) {
 
 	grunt.registerMultiTask('rem-to-px', 'Replace all rem values with px.', function() {
 
+		// Merge task-specific and/or target-specific options with these defaults.
+		var options = this.options({
+		    	path_prefix: '/',
+		    	path_images: 'images/'
+		    });
+
 		// Iterate over all specified file groups.
 		this.files.forEach(function(f) {
 			// Concat specified files.
@@ -38,13 +44,13 @@ module.exports = function(grunt) {
 
 				// Replace background-color rgba(r,g,b,a) with background-image: url(rgba_r_g_b_a.png);
 				.replace(/background-color\s*\:\s*rgba\(\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*\)/g, function($0, $1, $2, $3, $4) {
-					var file = "/static/images/bg/rgba_"+ parseInt($1) +"_"+ parseInt($2) +"_"+ parseInt($3) +"_"+ Math.round((parseFloat($4) * 100)) +".png"; 
+					var file = options.path_images + "rgba_"+ parseInt($1) +"_"+ parseInt($2) +"_"+ parseInt($3) +"_"+ Math.round((parseFloat($4) * 100)) +".png"; 
 
 					if (!grunt.file.exists(file)) {
 						console.log('Missing image: ' + file);
 					}
 
-					return "background-image: url('/static/images/bg/rgba_"+ $1 +"_"+ $2 +"_"+ $3 +"_"+ $4 +".png');";
+					return "background-image: url('" + options.path_prefix + file + "');";
 				});
 			}).join('\n');
 

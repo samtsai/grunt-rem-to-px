@@ -1,7 +1,7 @@
 {
   "name": "grunt-rem-to-px",
   "description": "Replaces rem values with px values to support old IE.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/cruncher/grunt-rem-to-px",
   
   "author": {
