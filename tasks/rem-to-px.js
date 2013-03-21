@@ -26,11 +26,25 @@ module.exports = function(grunt) {
 			}).map(function(filepath) {
 				var file = grunt.file.read(filepath);
 
-				return file.replace(/([+-]?\d*\.?\d+)\s*rem/g, function($0, $1, $2) {
-						var rem = parseFloat($1),
-						    px = Math.round(rem * 16);
+				return file
 
-						return px + 'px';
+				// Replace rem values with px values
+				.replace(/([+-]?\d*\.?\d+)\s*rem/g, function($0, $1, $2) {
+					var rem = parseFloat($1),
+					    px = Math.round(rem * 16);
+
+					return px + 'px';
+				})
+
+				// Replace background-color rgba(r,g,b,a) with background-image: url(rgba_r_g_b_a.png);
+				.replace(/background-color\s*\:\s*rgba\(\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*,\s*(\d*\.?\d+)\s*\)/g, function($0, $1, $2, $3, $4) {
+					var file = "/static/images/bg/rgba_"+ parseInt($1) +"_"+ parseInt($2) +"_"+ parseInt($3) +"_"+ Math.round((parseFloat($4) * 100)) +".png"; 
+
+					if (!grunt.file.exists(file)) {
+						console.log('Missing image: ' + file);
+					}
+
+					return "background-image: url('/static/images/bg/rgba_"+ $1 +"_"+ $2 +"_"+ $3 +"_"+ $4 +".png');";
 				});
 			}).join('\n');
 
