@@ -14,7 +14,7 @@ npm install grunt-rem-to-px --save-dev
 One the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('rem-to-px');
+grunt.loadNpmTasks('grunt-rem-to-px');
 ```
 
 ## The "rem-to-px" task
